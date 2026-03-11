@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Steckmüller Tamás Simon — Security Researcher</title>
+<meta name="description" content="Independent Security Researcher — Zero-Day Hunter, Cryptographic Vulnerability Researcher"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕯</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --stone: #2a2520;
+    --parchment: #f0e8d8;
+    --parchment-dim: #c8b99a;
+    --gold: #c9a84c;
+    --gold-dim: #7a5f2a;
+    --blue-deep: #1a2340;
+    --blue-glass: #2e4070;
+    --candle: #f5c842;
+    --candle-glow: rgba(245,200,66,0.15);
+    --ink: #1a1612;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+  /* === CANDLE CURSOR GLOW === */
+  .cursor-glow {
+    position: fixed;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,200,66,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%,-50%);
+    transition: left 0.15s ease, top 0.15s ease;
+    z-index: 9999;
+  }
+  /* === GOTHIC ARCH DIVIDER === */
+  .arch-divider {
+    text-align: center;
+    margin: 3rem auto;
+    color: var(--gold-dim);
+    font-size: 1.4rem;
+    letter-spacing: 1.5rem;
+    opacity: 0.5;
+  }
+  /* === HERO === */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    padding: 4rem 2rem;
+    background:
+      radial-gradient(ellipse at center, rgba(245,200,66,0.06) 0%, transparent 60%),
+      linear-gradient(180deg, #0d0b09 0%, #1a1612 100%);
+    border-bottom: 1px solid var(--gold-dim);
+  }
+  .rose-window {
+    width: 180px; height: 180px;
+    margin-bottom: 2.5rem;
+    position: relative;
+    animation: slowRotate 60s linear infinite;
+  }
+  @keyframes slowRotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  .candle-flame {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 18px; height: 28px;
+    background: radial-gradient(ellipse at 50% 80%, var(--candle) 0%, rgba(245,150,30,0.6) 50%, transparent 100%);
+    border-radius: 50% 50% 30% 30%;
+    animation: flicker 3s ease-in-out infinite;
+    z-index: 2;
+    filter: blur(1px);
+  }
+  .candle-glow-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,200,66,0.25) 0%, transparent 70%);
+    animation: glowPulse 3s ease-in-out infinite;
+  }
+  @keyframes flicker {
+    0%,100% { opacity:1; transform: translate(-50%,-50%) scaleX(1) scaleY(1); }
+    25%      { opacity:0.85; transform: translate(-50%,-52%) scaleX(0.95) scaleY(1.05); }
+    50%      { opacity:1; transform: translate(-51%,-50%) scaleX(1.05) scaleY(0.97); }
+    75%      { opacity:0.9; transform: translate(-50%,-51%) scaleX(0.98) scaleY(1.03); }
+  }
+  @keyframes glowPulse {
+    0%,100% { opacity:0.6; transform: translate(-50%,-50%) scale(1); }
+    50%     { opacity:1;   transform: translate(-50%,-50%) scale(1.2); }
+  }
+  h1.name {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--parchment);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 40px rgba(245,200,66,0.3);
+  }
+  .title-line {
+    font-size: 0.85rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0.8;
+  }
+  .tagline {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--parchment-dim);
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+  .platform-links {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .platform-links a {
+    padding: 0.55rem 1.4rem;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .platform-links a:hover {
+    background: var(--candle-glow);
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(245,200,66,0.15);
+  }
+  /* === SECTION WRAPPER === */
+  section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    opacity: 0.7;
+  }
+  h2.section-title {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: var(--parchment);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--gold-dim);
+    padding-bottom: 0.8rem;
+  }
+  .about-text {
+    font-size: 1rem;
+    line-height: 1.95;
+    color: var(--parchment-dim);
+    max-width: 680px;
+  }
+  .about-text em {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    color: var(--parchment);
+  }
+  /* === RESEARCH CARDS === */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    border: 1px solid var(--gold-dim);
+    padding: 1.8rem 1.4rem;
+    position: relative;
+    transition: all 0.4s;
+    background: rgba(201,168,76,0.03);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 12px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+  .card:hover {
+    background: rgba(201,168,76,0.07);
+    border-color: var(--gold);
+    box-shadow: 0 0 30px rgba(201,168,76,0.1);
+  }
+  .card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .card h3 {
+    font-family: 'IM Fell English', serif;
+    font-size: 1.05rem;
+    color: var(--parchment);
+    margin-bottom: 0.6rem;
+  }
+  .card p {
+    font-size: 0.82rem;
+    color: var(--parchment-dim);
+    line-height: 1.7;
+  }
+  /* === FINDINGS TIMELINE === */
+  .timeline {
+    margin-top: 2rem;
+    border-left: 1px solid var(--gold-dim);
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .finding {
+    position: relative;
+  }
+  .finding::before {
+    content: '\2726';
+    position: absolute;
+    left: -2.45rem;
+    color: var(--gold);
+    font-size: 0.7rem;
+    top: 0.3rem;
+    background: var(--ink);
+    padding: 2px 0;
+  }
+  .finding-meta {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+    opacity: 0.7;
+  }
+  .finding h3 {
+    font-family: 'IM Fell English', serif;
+    font-size: 1.1rem;
+    color: var(--parchment);
+    margin-bottom: 0.4rem;
+  }
+  .finding p {
+    font-size: 0.85rem;
+    color: var(--parchment-dim);
+    line-height: 1.7;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid;
+    padding: 0.15rem 0.6rem;
+    margin-top: 0.6rem;
+    margin-right: 0.4rem;
+  }
+  .badge.critical { border-color: #c0392b; color: #c0392b; }
+  .badge.high     { border-color: #e67e22; color: #e67e22; }
+  .badge.medium   { border-color: var(--gold); color: var(--gold); }
+  .badge.disclosed{ border-color: #2ecc71; color: #2ecc71; }
+  .badge.pending  { border-color: #7f8c8d; color: #7f8c8d; }
+  /* === CONTACT === */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin-top: 2rem;
+  }
+  .contact-item {
+    border: 1px solid var(--gold-dim);
+    padding: 1.4rem;
+    transition: all 0.3s;
+  }
+  .contact-item:hover {
+    border-color: var(--gold);
+    background: var(--candle-glow);
+  }
+  .contact-item .label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 0.4rem;
+  }
+  .contact-item .value {
+    font-size: 0.9rem;
+    color: var(--parchment);
+  }
+  /* === FOOTER === */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--gold-dim);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    opacity: 0.6;
+  }
+  footer .flame { font-size: 1rem; opacity: 1; animation: flicker 3s ease-in-out infinite; display:inline-block; }
+  /* === SVG ROSE WINDOW === */
+  .rose-svg { width:100%; height:100%; }
+  @media(max-width:600px) {
+    .rose-window { width:130px; height:130px; }
+  }
+</style>
+</head>
+<body>
+<div class="cursor-glow" id="glow"></div>
+<!-- HERO -->
+<div id="hero">
+  <div class="rose-window">
+    <svg class="rose-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6">
+        <circle cx="100" cy="100" r="95"/>
+        <circle cx="100" cy="100" r="70"/>
+        <circle cx="100" cy="100" r="45"/>
+        <circle cx="100" cy="100" r="20"/>
+        <!-- Petals -->
+        <circle cx="100" cy="55" r="22"/>
+        <circle cx="100" cy="145" r="22"/>
+        <circle cx="55" cy="100" r="22"/>
+        <circle cx="145" cy="100" r="22"/>
+        <circle cx="69" cy="69" r="22"/>
+        <circle cx="131" cy="69" r="22"/>
+        <circle cx="69" cy="131" r="22"/>
+        <circle cx="131" cy="131" r="22"/>
+        <!-- Spokes -->
+        <line x1="100" y1="5" x2="100" y2="195"/>
+        <line x1="5" y1="100" x2="195" y2="100"/>
+        <line x1="29" y1="29" x2="171" y2="171"/>
+        <line x1="171" y1="29" x2="29" y2="171"/>
+        <!-- Outer arcs -->
+        <path d="M100,5 A95,95 0 0,1 195,100"/>
+        <path d="M195,100 A95,95 0 0,1 100,195"/>
+        <path d="M100,195 A95,95 0 0,1 5,100"/>
+        <path d="M5,100 A95,95 0 0,1 100,5"/>
+      </g>
+    </svg>
+    <div class="candle-glow-ring"></div>
+    <div class="candle-flame"></div>
+  </div>
+  <div class="section-label">Independent Security Researcher</div>
+  <h1 class="name">Steckmüller Tamás Simon</h1>
+  <div class="title-line">Zero-Day Hunter &nbsp;·&nbsp; Cryptographic Vulnerability Researcher</div>
+  <p class="tagline">
+    "Egy gyertya fénye elegendő ahhoz,<br/>hogy megtaláljuk amit mások nem látnak."
+  </p>
+  <div class="platform-links">
+    <a href="#">Bugcrowd</a>
+    <a href="#">HackerOne</a>
+    <a href="#">GitHub</a>
+    <a href="#">PGP Kulcs</a>
+    <a href="#">Kapcsolat</a>
+  </div>
+</div>
+<!-- ABOUT -->
+<section>
+  <div class="section-label">I. könyv</div>
+  <h2 class="section-title">Rólam</h2>
+  <p class="about-text">
+    Független biztonsági kutató vagyok, aki <em>kriptográfiai sebezhetőségek,
+    blockchain/cross-chain architektúrák</em> és cloud infrastruktúra vizsgálatára specializálódott.
+    A munkám nem hangos — nem rombolok, hanem feltárok. Mint a felvilágosodás
+    tudósai, akik a természet rejtett törvényeit kereste, én a rendszerek
+    mögött húzódó logikai hibákat keresem, amelyek mások számára láthatatlanok maradnak.
+    <br/><br/>
+    Aktívan részt veszek bug bounty programokban (Bugcrowd, HackerOne), és
+    fókuszban tartom a <em>ECDSA implementációs hibák, cross-chain híd
+    sebezhetőségek és social engineering vektorok</em> kutatását.
+  </p>
+</section>
+<div class="arch-divider">⟡ · · · ⟡</div>
+<!-- RESEARCH AREAS -->
+<section>
+  <div class="section-label">II. könyv</div>
+  <h2 class="section-title">Kutatási Területek</h2>
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">🔐</span>
+      <h3>Kriptográfiai Sebezhetőségek</h3>
+      <p>ECDSA implementációs hibák, Keccak-256 payload manipuláció, kulcskezelési anomáliák.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">⛓️</span>
+      <h3>Blockchain / Cross-Chain</h3>
+      <p>Cross-chain bridge security, smart contract logikai hibák, Ethereum-kompatibilis protokollok.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">☁️</span>
+      <h3>Cloud Architektúra</h3>
+      <p>Cloud infrastruktúra biztonsági auditok, IAM misconfiguráció, laterális mozgás vektorok.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🧠</span>
+      <h3>Social Engineering</h3>
+      <p>White-hat social engineering, emberi faktor sebezhetőségek, tudatossági kutatás.</p>
+    </div>
+  </div>
+</section>
+<div class="arch-divider">⟡ · · · ⟡</div>
+<!-- FINDINGS -->
+<section>
+  <div class="section-label">III. könyv</div>
+  <h2 class="section-title">Kutatási Eredmények</h2>
+  <div class="timeline">
+    <div class="finding">
+      <div class="finding-meta">2026 · Blockchain · Bugcrowd</div>
+      <h3>Stargate Cross-Chain Bridge — ECDSA Payload Vulnerability</h3>
+      <p>Ethereum-kompatibilis cross-chain payload generálásban azonosított kriptográfiai implementációs hiba. Python-alapú PoC kidolgozva (ECDSA/Keccak-256).</p>
+      <span class="badge critical">Critical</span>
+      <span class="badge pending">Beadva</span>
+    </div>
+    <div class="finding">
+      <div class="finding-meta">2025 · Smart Contract · Bugcrowd</div>
+      <h3>Seaport 1.6 — Logic Error in Order Validation</h3>
+      <p>Kritikus logikai hiba az OpenSea Seaport 1.6 smart contract rendelés-validációs mechanizmusában. Részletes PoC dokumentálva.</p>
+      <span class="badge high">High</span>
+      <span class="badge pending">Értékelés alatt</span>
+    </div>
+    <div class="finding">
+      <div class="finding-meta">Folyamatban · Cloud Security</div>
+      <h3>Cloud Architecture Security Research</h3>
+      <p>Több nagy platform cloud infrastruktúrájának folyamatos biztonsági elemzése, fókuszban IAM és laterális mozgás vektorok.</p>
+      <span class="badge medium">Ongoing</span>
+    </div>
+  </div>
+</section>
+<div class="arch-divider">⟡ · · · ⟡</div>
+<!-- CONTACT -->
+<section>
+  <div class="section-label">IV. könyv</div>
+  <h2 class="section-title">Kapcsolat</h2>
+  <div class="contact-grid">
+    <div class="contact-item">
+      <div class="label">Platform</div>
+      <div class="value">Bugcrowd</div>
+    </div>
+    <div class="contact-item">
+      <div class="label">Platform</div>
+      <div class="value">HackerOne</div>
+    </div>
+    <div class="contact-item">
+      <div class="label">Email</div>
+      <div class="value">[ titkosított ]</div>
+    </div>
+    <div class="contact-item">
+      <div class="label">PGP Fingerprint</div>
+      <div class="value" style="font-size:0.75rem;letter-spacing:0.05em;">[ add hozzá ]</div>
+    </div>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer>
+  <span class="flame">🕯</span>
+  &nbsp;&nbsp; Steckmüller Tamás Simon &nbsp;·&nbsp; Independent Security Researcher &nbsp;·&nbsp; 2026 &nbsp;&nbsp;
+  <span class="flame">🕯</span>
+</footer>
+<script>
+  const glow = document.getElementById('glow');
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top  = e.clientY + 'px';
+  });
+</script>
+</body>
+</html>
