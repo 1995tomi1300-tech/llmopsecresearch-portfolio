@@ -1,0 +1,133 @@
+{
+  "mode": "dual_gpu_parallel",
+  "image": "modular/max-nvidia-full:latest",
+  "distro": "Ubuntu",
+  "workspace": "/mnt/d",
+  "output_dir": "/mnt/d/spiral_control_mcp/test_run",
+  "record_count": 6,
+  "runtime_s": 108.60920306900005,
+  "gpu0": {
+    "wrapper_path": "/mnt/d/_spiral_gpu0_batch.mojo",
+    "records": [
+      "sphere_shell_clean",
+      "cascade_repairable",
+      "root_fragment_unstable"
+    ],
+    "parsed": {
+      "shard": "gpu0",
+      "records": [
+        {
+          "record_index": 0,
+          "candidate_id": "sphere_shell_clean",
+          "trust_score": 0.7755650263166971,
+          "false_positive_risk": 0.19490723420998174,
+          "regime_label": "stable",
+          "rerun_recommendation": "rerun_conformer_generation",
+          "anomaly_mask": 1,
+          "anomaly_count": 1,
+          "cohort_alignment": 0.5,
+          "memory_size": 0
+        },
+        {
+          "record_index": 1,
+          "candidate_id": "cascade_repairable",
+          "trust_score": 0.5969145392761479,
+          "false_positive_risk": 0.35189544387162364,
+          "regime_label": "questionable",
+          "rerun_recommendation": "rerun_conformer_generation",
+          "anomaly_mask": 1,
+          "anomaly_count": 1,
+          "cohort_alignment": 0.8092235,
+          "memory_size": 1
+        },
+        {
+          "record_index": 2,
+          "candidate_id": "root_fragment_unstable",
+          "trust_score": 0.35863474294171743,
+          "false_positive_risk": 0.5961180950723207,
+          "regime_label": "discard",
+          "rerun_recommendation": "rerun_conformer_generation",
+          "anomaly_mask": 5,
+          "anomaly_count": 2,
+          "cohort_alignment": 0.61749575,
+          "memory_size": 1
+        }
+      ],
+      "summary": {
+        "cohort_count": 3,
+        "stable_count": 1,
+        "questionable_count": 1,
+        "discard_count": 1,
+        "anomaly_count": 3,
+        "logical_node_total": 3.0,
+        "mean_trust_score": 0.5862767296641117,
+        "mean_false_positive_risk": 0.3781977926146869,
+        "mean_cohort_alignment": 0.64223975
+      }
+    },
+    "stderr": "wsl: Failed to start the systemd user session for 'root'. See journalctl for more details.\n",
+    "returncode": 0
+  },
+  "gpu1": {
+    "wrapper_path": "/mnt/d/_spiral_gpu1_batch.mojo",
+    "records": [
+      "helical_corridor_balanced",
+      "sphere_occluded_noisy",
+      "cascade_breakdown"
+    ],
+    "parsed": {
+      "shard": "gpu1",
+      "records": [
+        {
+          "record_index": 0,
+          "candidate_id": "helical_corridor_balanced",
+          "trust_score": 0.48517324120695704,
+          "false_positive_risk": 0.46252105527582577,
+          "regime_label": "questionable",
+          "rerun_recommendation": "rerun_conformer_generation",
+          "anomaly_mask": 3,
+          "anomaly_count": 2,
+          "cohort_alignment": 0.5,
+          "memory_size": 0
+        },
+        {
+          "record_index": 1,
+          "candidate_id": "sphere_occluded_noisy",
+          "trust_score": 0.5683262384749461,
+          "false_positive_risk": 0.3672962569150323,
+          "regime_label": "questionable",
+          "rerun_recommendation": "rerun_conformer_generation",
+          "anomaly_mask": 1,
+          "anomaly_count": 1,
+          "cohort_alignment": 0.5,
+          "memory_size": 0
+        },
+        {
+          "record_index": 2,
+          "candidate_id": "cascade_breakdown",
+          "trust_score": 0.4260393878153503,
+          "false_positive_risk": 0.49956536731078977,
+          "regime_label": "discard",
+          "rerun_recommendation": "rerun_conformer_generation",
+          "anomaly_mask": 1,
+          "anomaly_count": 1,
+          "cohort_alignment": 0.5,
+          "memory_size": 0
+        }
+      ],
+      "summary": {
+        "cohort_count": 3,
+        "stable_count": 0,
+        "questionable_count": 2,
+        "discard_count": 1,
+        "anomaly_count": 3,
+        "logical_node_total": 3.0,
+        "mean_trust_score": 0.4931796224990845,
+        "mean_false_positive_risk": 0.44312755983388263,
+        "mean_cohort_alignment": 0.5
+      }
+    },
+    "stderr": "",
+    "returncode": 0
+  }
+}

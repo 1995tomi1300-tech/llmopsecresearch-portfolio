@@ -1,0 +1,20 @@
+[2026-03-14T02:33:50Z] START bash -lc KEEP_ALIVE=1 /mnt/d/run_spiral_wsl_native_dual_gpu.sh
+Launching spiral-native-gpu0 on GPU 0
+Launching spiral-native-gpu1 on GPU 1
+
+Native WSL dual-GPU containers started:
+  spiral-native-gpu0 -> GPU0
+  spiral-native-gpu1 -> GPU1
+
+Useful commands:
+  docker logs -f spiral-native-gpu0
+  docker logs -f spiral-native-gpu1
+  docker exec -it spiral-native-gpu0 /bin/bash
+  docker exec -it spiral-native-gpu1 /bin/bash
+
+Current image: modular/max-nvidia-full:latest
+Workspace mount: /mnt/d -> /workspace
+Default command: mojo --version && mojo /workspace/spiral_validation.mojo
+GPU0 command: mojo --version && mojo /workspace/spiral_validation.mojo
+GPU1 command: mojo --version && mojo /workspace/spiral_validation.mojo
+Keep alive: 1

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "spiral_mojo_bridge_schema.json",
+  "title": "SPIRAL Mojo Bridge Payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "bridge_version",
+    "record_count",
+    "records"
+  ],
+  "properties": {
+    "bridge_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "record_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidate_id",
+          "descriptor_consistency",
+          "conformer_energy_variance",
+          "rmsd_cluster_density",
+          "torsion_entropy",
+          "shape_similarity_index",
+          "pharmacophore_deviation",
+          "minimization_success_rate",
+          "pipeline_instability_flags",
+          "protein_branch",
+          "missing_signal_count",
+          "report_path",
+          "missing_signals",
+          "entry_types",
+          "source_notes"
+        ],
+        "properties": {
+          "candidate_id": {
+            "type": "string"
+          },
+          "descriptor_consistency": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "conformer_energy_variance": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "rmsd_cluster_density": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "torsion_entropy": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "shape_similarity_index": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "pharmacophore_deviation": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "minimization_success_rate": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "pipeline_instability_flags": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "protein_branch": {
+            "type": "boolean"
+          },
+          "missing_signal_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "report_path": {
+            "type": "string"
+          },
+          "missing_signals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "entry_types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source_notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

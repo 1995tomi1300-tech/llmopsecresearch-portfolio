@@ -1,0 +1,86 @@
+{
+  "version": "0.1.0",
+  "created_at": "2026-03-14T02:27:13Z",
+  "updated_at": "2026-03-14T03:01:41Z",
+  "jobs": {
+    "job_50424f7bb6f4": {
+      "label": "dual_gpu_batch",
+      "command": [
+        "python3",
+        "/mnt/d/resonance_spiral_dual_gpu_batch.py",
+        "/mnt/d/nvda_virtualis_ter_lidar/outputs/synthetic_lidar_bridge_payload.json",
+        "--output-dir",
+        "/mnt/d/spiral_control_mcp/test_run"
+      ],
+      "cwd": "/mnt/d",
+      "pid": 12450,
+      "status": "exited",
+      "alive": false,
+      "started_at": "2026-03-14T02:27:56Z",
+      "log_path": "/mnt/d/spiral_control_mcp/logs/job_50424f7bb6f4.log",
+      "meta": {
+        "inputs": [
+          "/mnt/d/nvda_virtualis_ter_lidar/outputs/synthetic_lidar_bridge_payload.json"
+        ],
+        "output_dir": "/mnt/d/spiral_control_mcp/test_run"
+      }
+    },
+    "job_cdc371e47090": {
+      "label": "native_dual_gpu_stack",
+      "command": [
+        "bash",
+        "-lc",
+        "KEEP_ALIVE=1 /mnt/d/run_spiral_wsl_native_dual_gpu.sh"
+      ],
+      "cwd": "/mnt/d",
+      "pid": 16979,
+      "status": "exited",
+      "alive": false,
+      "started_at": "2026-03-14T02:33:50Z",
+      "log_path": "/mnt/d/spiral_control_mcp/logs/job_cdc371e47090.log",
+      "meta": {
+        "gpu0_command": null,
+        "gpu1_command": null,
+        "keep_alive": "1"
+      }
+    },
+    "job_3bed90b96ba3": {
+      "label": "native_dual_gpu_stack",
+      "command": [
+        "bash",
+        "-lc",
+        "KEEP_ALIVE=1 /mnt/d/run_spiral_wsl_native_dual_gpu.sh"
+      ],
+      "cwd": "/mnt/d",
+      "pid": 18682,
+      "status": "exited",
+      "alive": false,
+      "started_at": "2026-03-14T02:57:58Z",
+      "log_path": "/mnt/d/spiral_control_mcp/logs/job_3bed90b96ba3.log",
+      "meta": {
+        "gpu0_command": null,
+        "gpu1_command": null,
+        "keep_alive": "1"
+      }
+    },
+    "job_a157b8acd9c6": {
+      "label": "native_dual_gpu_stack",
+      "command": [
+        "bash",
+        "-lc",
+        "KEEP_ALIVE=1 /mnt/d/run_spiral_wsl_native_dual_gpu.sh"
+      ],
+      "cwd": "/mnt/d",
+      "pid": 39357,
+      "status": "exited",
+      "alive": false,
+      "started_at": "2026-03-14T03:01:38Z",
+      "log_path": "/mnt/d/spiral_control_mcp/logs/job_a157b8acd9c6.log",
+      "meta": {
+        "gpu0_command": null,
+        "gpu1_command": null,
+        "keep_alive": "1"
+      }
+    }
+  }
+}
