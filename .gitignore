@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+portfolio/styles/*.min.css
+portfolio/scripts/*.min.js
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Package manager locks (optional - uncomment if you want to ignore)
+# package-lock.json
+# yarn.lock

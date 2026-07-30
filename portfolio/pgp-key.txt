@@ -1,0 +1,9 @@
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+Note: This is a placeholder. Replace with your actual PGP public key.
+For security researchers, a strong PGP key is essential for secure communication.
+
+Generate your key with: gpg --full-generate-key
+Export with: gpg --armor --export your-email@example.com
+
+-----END PGP PUBLIC KEY BLOCK-----

@@ -1,0 +1,38 @@
+{
+  "name": "llmopsecresearch-portfolio",
+  "version": "1.0.0",
+  "description": "Security Researcher Portfolio Website",
+  "private": true,
+  "scripts": {
+    "build": "npm run minify-css && npm run minify-js",
+    "minify-css": "cleancss -o styles/main.min.css styles/main.css",
+    "minify-js": "terser scripts/main.js -o scripts/main.min.js --compress --mangle",
+    "lint": "npm run lint-html && npm run lint-css",
+    "lint-html": "htmlhint portfolio/*.html",
+    "lint-css": "stylelint styles/*.css",
+    "dev": "concurrently \"npm run watch-css\" \"npm run watch-js\"",
+    "watch-css": "nodemon --watch styles --ext css --exec \"npm run minify-css\"",
+    "watch-js": "nodemon --watch scripts --ext js --exec \"npm run minify-js\""
+  },
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "concurrently": "^8.2.2",
+    "htmlhint": "^1.1.4",
+    "nodemon": "^3.0.2",
+    "stylelint": "^16.2.0",
+    "stylelint-config-standard": "^36.0.0",
+    "terser": "^5.27.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "security",
+    "researcher",
+    "portfolio",
+    "bug-bounty",
+    "cryptography"
+  ],
+  "author": "Steckmüller Tamás Simon",
+  "license": "MIT"
+}
