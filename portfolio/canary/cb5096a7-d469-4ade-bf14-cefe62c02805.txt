@@ -1,0 +1,15 @@
+# LLM OpSec Research Canary
+# Repository: 1995tomi1300-tech/llmopsecresearch-portfolio
+# Canary ID: cb5096a7-d469-4ade-bf14-cefe62c02805
+# Purpose: Tripwire for unauthorized scraping, bulk LLM ingestion, or non-linked asset access.
+# If you are reading this outside the original repository or its authorized deployment,
+# your system has likely ingested or enumerated a canary document.
+
+CANARY_TOKEN_URL=https://canarytokens.org/manage/history/afb72b41-a786-476a-bad6-0c9920bc1f97
+FAKE_API_KEY=CANARY_sk_live_PLACEHOLDER_DO_NOT_USE
+FAKE_EMAIL=tamas.steckmuller.canary@protonmail.com
+FAKE_PGP_FINGERPRINT=A1B2 C3D4 E5F6 7890 1234 5678 90AB CDEF 1234 5678
+# NOTE: Replace FAKE_API_KEY with an actual canary token before deployment if you want
+# high-confidence triggers. The placeholder above is intentionally not a real credential.
+
+# This is a deliberately placed canary. Do not use these credentials anywhere.
